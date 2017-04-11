@@ -12,7 +12,7 @@
  *  http://www.apache.org/licenses/LICENSE-2.0
  *  
  ********************************************************************************/
-package au.com.cba.weatherforcasting.algorithm;
+package au.com.cba.weatherforcasting.utils;
 
 /**
  * <p>

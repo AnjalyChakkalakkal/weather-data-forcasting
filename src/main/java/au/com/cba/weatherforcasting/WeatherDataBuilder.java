@@ -21,10 +21,9 @@ import java.util.List;
 import au.com.cba.weatherforcasting.algorithm.Record;
 import au.com.cba.weatherforcasting.algorithm.SlidingWindow;
 import au.com.cba.weatherforcasting.algorithm.SlidingWindowException;
-import au.com.cba.weatherforcasting.algorithm.WeatherRecord;
 import au.com.cba.weatherforcasting.algorithm.Window;
 import au.com.cba.weatherforcasting.utils.Distance;
-import au.com.cba.weatherforcasting.utils.Utils;
+import au.com.cba.weatherforcasting.utils.WeatherVariationHelper;
 
 /**
  * <p>
@@ -71,9 +70,11 @@ public class WeatherDataBuilder {
 		try {
 			this.windows = this.slidingWindow.prepareSlidingWindows(this.previousRecord);
 			List<Distance> calculatedDistance = calculateDistance(this.currentRecord);
-			Distance minimumDistance = Utils.getInstance().getMinimumDistance(calculatedDistance);
-			List<Record> previousDataVariation = calculateVariationMatrix(minimumDistance.getWindow().getRecords());
-			List<Record> currentDataVariation = calculateVariationMatrix(minimumDistance.getRecords());
+			Distance minimumDistance = WeatherVariationHelper.getInstance().getMinimumDistance(calculatedDistance);
+			List<Record> previousDataVariation = WeatherVariationHelper.getInstance().calculateVariationMatrix(
+					minimumDistance.getWindow().getRecords());
+			List<Record> currentDataVariation = WeatherVariationHelper.getInstance().calculateVariationMatrix(
+					minimumDistance.getRecords());
 			Record weatherVariation = getFinalWeatherVariation(previousDataVariation, currentDataVariation);
 			return weatherVariation;
 
@@ -84,64 +85,22 @@ public class WeatherDataBuilder {
 
 	/**
 	 * <p>
+	 * A function that calculate final weather variation form a list of past weather variation and current variation.
 	 * </p>
 	 * 
 	 * @param previousDataVariation
+	 *            variation from the past weather data.
 	 * @param currentDataVariation
-	 * @return
+	 *            variation from the current weather data.
+	 * @return a weather data record with final variation.
 	 */
 	private Record getFinalWeatherVariation(final List<Record> previousDataVariation,
 			final List<Record> currentDataVariation) {
 
-		Record previousMeanRecord = calculateMean(previousDataVariation);
-		Record currentMeanRecord = calculateMean(currentDataVariation);
+		Record previousMeanRecord = WeatherVariationHelper.getInstance().calculateMean(previousDataVariation);
+		Record currentMeanRecord = WeatherVariationHelper.getInstance().calculateMean(currentDataVariation);
 		List<Record> records = Arrays.asList(previousMeanRecord, currentMeanRecord);
-		return calculateMean(records);
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 * 
-	 * @param records
-	 * @return
-	 */
-	private Record calculateMean(final List<Record> records) {
-		WeatherRecord finalMeanRecord = new WeatherRecord();
-		for (Record record : records) {
-			float tempreature = finalMeanRecord.getTemperature() + ((WeatherRecord) record).getTemperature();
-			finalMeanRecord.setTemperature(tempreature);
-			float pressure = finalMeanRecord.getPressure() + ((WeatherRecord) record).getPressure();
-			finalMeanRecord.setTemperature(pressure);
-			float humidity = finalMeanRecord.getHumidity() + ((WeatherRecord) record).getHumidity();
-			finalMeanRecord.setTemperature(humidity);
-		}
-		finalMeanRecord.setTemperature(finalMeanRecord.getTemperature() / records.size());
-		finalMeanRecord.setHumidity(finalMeanRecord.getHumidity() / records.size());
-		finalMeanRecord.setPressure(finalMeanRecord.getPressure() / records.size());
-		return finalMeanRecord;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 * 
-	 * @param records
-	 * @return
-	 */
-	private List<Record> calculateVariationMatrix(final List<Record> records) {
-		WeatherRecord firstRecord = (WeatherRecord) records.get(0);
-		List<Record> weatherRecords = new ArrayList<Record>();
-		for (int index = 1; index < records.size(); index++) {
-			WeatherRecord secondRecord = (WeatherRecord) records.get(index);
-			WeatherRecord weatherRecord = new WeatherRecord();
-			weatherRecord.setTemperature(secondRecord.getTemperature() - firstRecord.getTemperature());
-			weatherRecord.setPressure(secondRecord.getPressure() - firstRecord.getPressure());
-			weatherRecord.setHumidity(secondRecord.getHumidity() - firstRecord.getHumidity());
-			weatherRecords.add(weatherRecord);
-			firstRecord = secondRecord;
-		}
-		return weatherRecords;
+		return WeatherVariationHelper.getInstance().calculateMean(records);
 	}
 
 	/**
@@ -161,7 +120,7 @@ public class WeatherDataBuilder {
 		List<Distance> distances = new ArrayList<Distance>();
 		for (Window<Record> window : this.windows) {
 			checkSizeAreEqual(window.getRecords().size(), records.size());
-			distances.add(Utils.getInstance().calculateEuclideanDistance(window, records));
+			distances.add(WeatherVariationHelper.getInstance().calculateEuclideanDistance(window, records));
 		}
 		return distances;
 	}

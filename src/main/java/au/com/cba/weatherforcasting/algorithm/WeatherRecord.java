@@ -16,6 +16,8 @@ package au.com.cba.weatherforcasting.algorithm;
 
 import java.util.Date;
 
+import au.com.cba.weatherforcasting.utils.Condition;
+
 /**
  * <p>
  * This class represent weather data for a particular day.
