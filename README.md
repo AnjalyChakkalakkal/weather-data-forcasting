@@ -21,7 +21,10 @@ Table of Contents
 ## Weather forecasting and Algorithm used
 
 ```
-Weather forecasting is mainly concerned with the prediction of weather condition in the given future time. Weather forecasts provide critical information about future weather. There are various approaches available in weather forecasting, from relatively simple observation of the sky to highly complex computerized mathematical models.
+Weather forecasting is mainly concerned with the prediction of weather condition in the given future time. 
+Weather forecasts provide critical information about future weather. There are various approaches available 
+in weather forecasting, from relatively simple observation of the sky to highly complex computerized 
+mathematical models.
  
 A new sliding window approach for the same is used in this project for weather prediction.
 ```
