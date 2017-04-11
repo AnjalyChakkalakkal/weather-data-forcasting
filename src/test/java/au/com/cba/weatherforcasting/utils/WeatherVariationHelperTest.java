@@ -17,6 +17,7 @@ package au.com.cba.weatherforcasting.utils;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -110,8 +111,9 @@ public class WeatherVariationHelperTest {
 	}
 
 	@Test
-	public void test_getFormatterDate_success() {
-
+	public void test_getDateFrom_success() throws ParseException {
+		Date dateFrom = this.weatherSimulationHelper.getDateFrom("dd/MM/yyyy", "12/05/2017");
+		Assert.assertNotNull(dateFrom);
 	}
 
 	private List<Distance> populateDistance() {
