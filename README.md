@@ -40,3 +40,42 @@ Step 6. For 𝑘 = 1 to 𝑛
 Step 7. End
 
 ```
+<a name="Configuring-Java-and-Maven"></a>
+
+## Configuring Java and Maven.
+
+<h1> Installation procedure </h1>
+
+<h2>Install Java</h2>
+
+```java
+To run the application java 1.8 need to be installed in the machine.
+
+Add JAVA_HOME environment variable and include in PATH variable
+
+edit .bashrc to export JAVA_HOME.
+
+export JAVA_HOME=/home/559162/jdk1.8.0_92
+
+export PATH=$PATH:$JAVA_HOME/bin
+
+check the java installation using <b>java -version</b>
+
+java version "1.8.0_92"
+Java(TM) SE Runtime Environment (build 1.8.0_92-b14)
+Java HotSpot(TM) 64-Bit Server VM (build 25.92-b14, mixed mode)
+
+Now you have java installed in the machine.
+
+```
+
+<h2>Install Maven</h2>
+
+```mvn
+Download Apache Maven and install it.
+
+unzip apache-maven-3.3.9-bin.zip
+
+Add the bin directory of the created directory apache-maven-3.3.9 to the PATH environment variable
+
+```
