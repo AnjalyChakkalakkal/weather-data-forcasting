@@ -14,8 +14,17 @@
  ********************************************************************************/
 package au.com.cba.weatherforcasting;
 
+import java.io.File;
+import java.util.Calendar;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
+
+import au.com.cba.weatherforcasting.algorithm.WeatherRecord;
+import au.com.cba.weatherforcasting.utils.WeatherConstants;
 
 /**
  * <p>
@@ -26,6 +35,10 @@ import org.junit.BeforeClass;
  *
  */
 public class WeatherForcastingEngineTest {
+
+	private WeatherHistory weatherHistory;
+	private WeatherForcastingEngine weatherForcastingEngine;
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -33,5 +46,44 @@ public class WeatherForcastingEngineTest {
 	@Before
 	public void setUp() throws Exception {
 
+		populateWeatherHistory();
+
+		this.weatherForcastingEngine = new WeatherForcastingEngine(this.weatherHistory);
+	}
+
+	@Test
+	public void test_startForcasting_success() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2017, 3, 12);
+		this.weatherForcastingEngine.startForcasting(calendar.getTime(), 2);
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void test_startForcasting_failure() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2017, 4, 12);
+		WeatherForcastingEngine weatherForcastingEngine = new WeatherForcastingEngine(null);
+		weatherForcastingEngine.startForcasting(calendar.getTime(), 2);
+	}
+
+	private void populateWeatherHistory() {
+		try (Scanner scanner = new Scanner(this.getClass().getResourceAsStream(File.separator + "SYDNEY.CSV")))
+		{
+			this.weatherHistory = new WeatherHistory();
+			this.weatherHistory.setStationName("SYDNEY");
+
+			while (scanner.hasNext()) {
+				WeatherRecord weatherRecord = new WeatherRecord();
+				StringTokenizer stringTokenizer = new StringTokenizer(scanner.nextLine(),
+						WeatherConstants.DATA_SEPARATOR);
+				String date = (String) stringTokenizer.nextElement();
+				weatherRecord.setStation(Thread.currentThread().getName());
+				weatherRecord.setLocalTime(date);
+				weatherRecord.setTemperature(Float.valueOf((String) stringTokenizer.nextElement()));
+				weatherRecord.setHumidity(Float.valueOf((String) stringTokenizer.nextElement()));
+				weatherRecord.setPressure(Float.valueOf((String) stringTokenizer.nextElement()));
+				this.weatherHistory.getHistoryRecord().put(date, weatherRecord);
+			}
+		}
 	}
 }
