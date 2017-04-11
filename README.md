@@ -17,6 +17,8 @@ Table of Contents
 
 <a name="Weather-forecasting-and-Algorithm-used"></a>
 
+## Weather forecasting and Algorithm used
+
 Weather forecasting is mainly concerned with the prediction of weather condition in the given future time. Weather forecasts provide critical information about future weather. There are various approaches available in weather forecasting, from relatively simple observation of the sky to highly complex computerized mathematical models.
 
 ```algo
