@@ -1,10 +1,9 @@
 # Weather Forcasting
 
-```
 Create a toy model of the environment (taking into account things like atmosphere, topography,
 geography, oceanography, or similar) that evolves over time. Then take measurements at various
 locations (ie weather stations), and then have your program emit that data.
-```
+
 ---
 
 Table of Contents
