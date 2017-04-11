@@ -25,25 +25,25 @@ import java.util.List;
  * @author Anjaly Chakkalakkal
  *
  */
-public class Window {
+public class Window<T> {
 
-	List<WeatherRecord> weatherRecords;
+	List<T> records;
 
 	public Window() {
 
-		this.weatherRecords = new ArrayList<WeatherRecord>(7);
+		this.records = new ArrayList<T>();
 	}
 
-	public Window(int size) {
+	public void addRecord(T record) {
 
-		this.weatherRecords = new ArrayList<WeatherRecord>();
+		this.records.add(record);
 	}
 
-	public List<WeatherRecord> getWeatherRecords() {
-		return weatherRecords;
+	public List<T> getRecords() {
+		return records;
 	}
 
-	public void setWeatherRecords(List<WeatherRecord> weatherRecords) {
-		this.weatherRecords = weatherRecords;
+	public void setRecords(List<T> records) {
+		this.records = records;
 	}
 }
