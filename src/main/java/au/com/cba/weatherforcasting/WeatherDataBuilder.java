@@ -23,8 +23,8 @@ import au.com.cba.weatherforcasting.algorithm.SlidingWindow;
 import au.com.cba.weatherforcasting.algorithm.SlidingWindowException;
 import au.com.cba.weatherforcasting.algorithm.Window;
 import au.com.cba.weatherforcasting.utils.Distance;
-import au.com.cba.weatherforcasting.utils.WeatherVariationHelper;
-import au.com.cba.weatherforcasting.utils.WeatherVariationHelperException;
+import au.com.cba.weatherforcasting.utils.WeatherSimulationHelper;
+import au.com.cba.weatherforcasting.utils.WeatherSimulationHelperException;
 
 /**
  * <p>
@@ -71,15 +71,15 @@ public class WeatherDataBuilder {
 		try {
 			this.windows = this.slidingWindow.prepareSlidingWindows(this.previousRecord);
 			List<Distance> calculatedDistance = calculateDistance(this.currentRecord);
-			Distance minimumDistance = WeatherVariationHelper.getInstance().getMinimumDistance(calculatedDistance);
-			List<Record> previousDataVariation = WeatherVariationHelper.getInstance().calculateVariationMatrix(
+			Distance minimumDistance = WeatherSimulationHelper.getInstance().getMinimumDistance(calculatedDistance);
+			List<Record> previousDataVariation = WeatherSimulationHelper.getInstance().calculateVariationMatrix(
 					minimumDistance.getWindow().getRecords());
-			List<Record> currentDataVariation = WeatherVariationHelper.getInstance().calculateVariationMatrix(
+			List<Record> currentDataVariation = WeatherSimulationHelper.getInstance().calculateVariationMatrix(
 					minimumDistance.getRecords());
 			Record weatherVariation = getFinalWeatherVariation(previousDataVariation, currentDataVariation);
 			return weatherVariation;
 
-		} catch (SlidingWindowException | WeatherVariationHelperException exception) {
+		} catch (SlidingWindowException | WeatherSimulationHelperException exception) {
 			throw new WeatherDataBuilderException(exception);
 		}
 	}
@@ -98,10 +98,10 @@ public class WeatherDataBuilder {
 	private Record getFinalWeatherVariation(final List<Record> previousDataVariation,
 			final List<Record> currentDataVariation) {
 
-		Record previousMeanRecord = WeatherVariationHelper.getInstance().calculateMean(previousDataVariation);
-		Record currentMeanRecord = WeatherVariationHelper.getInstance().calculateMean(currentDataVariation);
+		Record previousMeanRecord = WeatherSimulationHelper.getInstance().calculateMean(previousDataVariation);
+		Record currentMeanRecord = WeatherSimulationHelper.getInstance().calculateMean(currentDataVariation);
 		List<Record> records = Arrays.asList(previousMeanRecord, currentMeanRecord);
-		return WeatherVariationHelper.getInstance().calculateMean(records);
+		return WeatherSimulationHelper.getInstance().calculateMean(records);
 	}
 
 	/**
@@ -114,15 +114,15 @@ public class WeatherDataBuilder {
 	 * @return a list of distance
 	 * @throws WeatherDataBuilderException
 	 */
-	private List<Distance> calculateDistance(final List<Record> records) throws WeatherVariationHelperException,
+	private List<Distance> calculateDistance(final List<Record> records) throws WeatherSimulationHelperException,
 			WeatherDataBuilderException {
 
 		validateRequiredData();
 
 		List<Distance> distances = new ArrayList<Distance>();
 		for (Window<Record> window : this.windows) {
-			WeatherVariationHelper.getInstance().checkSizeAreEqual(window.getRecords().size(), records.size());
-			distances.add(WeatherVariationHelper.getInstance().calculateEuclideanDistance(window, records));
+			WeatherSimulationHelper.getInstance().checkSizeAreEqual(window.getRecords().size(), records.size());
+			distances.add(WeatherSimulationHelper.getInstance().calculateEuclideanDistance(window, records));
 		}
 		return distances;
 	}

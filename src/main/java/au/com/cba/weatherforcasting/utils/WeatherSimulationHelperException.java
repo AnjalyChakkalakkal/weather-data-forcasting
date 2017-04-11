@@ -1,25 +1,25 @@
 package au.com.cba.weatherforcasting.utils;
 
-public class WeatherVariationHelperException extends Exception {
+public class WeatherSimulationHelperException extends Exception {
 
 	private static final long serialVersionUID = -5845886002241247432L;
 
-	public WeatherVariationHelperException() {
+	public WeatherSimulationHelperException() {
 
 		super();
 	}
 
-	public WeatherVariationHelperException(String msg) {
+	public WeatherSimulationHelperException(String msg) {
 
 		super(msg);
 	}
 
-	public WeatherVariationHelperException(String message, Throwable cause) {
+	public WeatherSimulationHelperException(String message, Throwable cause) {
 
 		super(message, cause);
 	}
 
-	public WeatherVariationHelperException(Throwable cause) {
+	public WeatherSimulationHelperException(Throwable cause) {
 
 		super(cause);
 	}

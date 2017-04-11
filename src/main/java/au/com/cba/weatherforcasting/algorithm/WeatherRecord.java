@@ -14,9 +14,8 @@
  ********************************************************************************/
 package au.com.cba.weatherforcasting.algorithm;
 
-import java.util.Date;
-
 import au.com.cba.weatherforcasting.utils.Condition;
+import au.com.cba.weatherforcasting.utils.WeatherConstants;
 
 /**
  * <p>
@@ -29,7 +28,7 @@ import au.com.cba.weatherforcasting.utils.Condition;
 public class WeatherRecord implements Record {
 
 	private String station;
-	private Date localTime;
+	private String localTime;
 	private Condition condition;
 	private float temperature;
 	private float pressure;
@@ -43,11 +42,11 @@ public class WeatherRecord implements Record {
 		this.station = station;
 	}
 
-	public Date getLocalTime() {
+	public String getLocalTime() {
 		return localTime;
 	}
 
-	public void setLocalTime(Date localTime) {
+	public void setLocalTime(String localTime) {
 		this.localTime = localTime;
 	}
 
@@ -65,6 +64,21 @@ public class WeatherRecord implements Record {
 
 	public void setTemperature(float temperature) {
 		this.temperature = temperature;
+		if (temperature < 0 || (temperature > 0 && temperature < 10)) {
+			this.condition = Condition.COLD;
+		} else if (temperature > 10 && temperature < 15) {
+			this.condition = Condition.COLD;
+		} else if (temperature > 15 && temperature < 20) {
+			this.condition = Condition.CLOUD;
+		} else if (temperature > 20 && temperature < 25) {
+			this.condition = Condition.RAINY;
+		} else if (temperature > 25 && temperature < 30) {
+			this.condition = Condition.SUNNY;
+		} else if (temperature > 30 && temperature < 35) {
+			this.condition = Condition.HOT;
+		} else if (temperature > 35) {
+			this.condition = Condition.WARM;
+		}
 	}
 
 	public float getPressure() {
@@ -81,5 +95,13 @@ public class WeatherRecord implements Record {
 
 	public void setHumidity(float humidity) {
 		this.humidity = humidity;
+	}
+
+	@Override
+	public String getFormattedData() {
+		return this.station + WeatherConstants.METADATA_SEPARATOR + this.localTime
+				+ WeatherConstants.METADATA_SEPARATOR + this.temperature
+				+ WeatherConstants.METADATA_SEPARATOR + this.humidity + WeatherConstants.METADATA_SEPARATOR
+				+ this.pressure + WeatherConstants.METADATA_SEPARATOR + this.condition;
 	}
 }

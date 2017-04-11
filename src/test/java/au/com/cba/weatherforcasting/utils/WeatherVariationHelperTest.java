@@ -37,7 +37,7 @@ import au.com.cba.weatherforcasting.algorithm.Window;
 
 public class WeatherVariationHelperTest {
 
-	private WeatherVariationHelper weatherVariationHelper;
+	private WeatherSimulationHelper weatherSimulationHelper;
 	private Window<Record> windowRecord;
 	private List<Record> records;
 
@@ -47,31 +47,31 @@ public class WeatherVariationHelperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.weatherVariationHelper = WeatherVariationHelper.getInstance();
+		this.weatherSimulationHelper = WeatherSimulationHelper.getInstance();
 		populateWindowRecord();
 		populateRecord();
 
 	}
 
 	@Test
-	public void test_calculateEuclideanDistance_Success() throws WeatherVariationHelperException {
-		Distance distance = this.weatherVariationHelper.calculateEuclideanDistance(this.windowRecord, this.records);
+	public void test_calculateEuclideanDistance_Success() throws WeatherSimulationHelperException {
+		Distance distance = this.weatherSimulationHelper.calculateEuclideanDistance(this.windowRecord, this.records);
 		Assert.assertNotNull(distance);
 		double actualDistance = distance.getDistance();
 		Assert.assertEquals(52.297, actualDistance, 0.0);
 	}
 
-	@Test(expected = WeatherVariationHelperException.class)
-	public void test_calculateEuclideanDistance_Failure() throws WeatherVariationHelperException {
+	@Test(expected = WeatherSimulationHelperException.class)
+	public void test_calculateEuclideanDistance_Failure() throws WeatherSimulationHelperException {
 		this.windowRecord.getRecords().remove(0);
-		this.weatherVariationHelper.calculateEuclideanDistance(this.windowRecord, this.records);
+		this.weatherSimulationHelper.calculateEuclideanDistance(this.windowRecord, this.records);
 	}
 
 	@Test
 	public void test_getMinimumDistance_Success() {
 
 		List<Distance> distances = populateDistance();
-		Distance minimumDistance = this.weatherVariationHelper.getMinimumDistance(distances);
+		Distance minimumDistance = this.weatherSimulationHelper.getMinimumDistance(distances);
 		Assert.assertNotNull(minimumDistance);
 		double minDistance = minimumDistance.getDistance();
 		Assert.assertEquals(12.7, minDistance, 0.0);
@@ -79,7 +79,7 @@ public class WeatherVariationHelperTest {
 
 	@Test
 	public void test_calculateMean_Success() {
-		Record meanRecord = this.weatherVariationHelper.calculateMean(this.records);
+		Record meanRecord = this.weatherSimulationHelper.calculateMean(this.records);
 		Assert.assertNotNull(meanRecord);
 		float meanTemperature = ((WeatherRecord) meanRecord).getTemperature();
 		float meanHumidity = ((WeatherRecord) meanRecord).getHumidity();
@@ -92,7 +92,7 @@ public class WeatherVariationHelperTest {
 
 	@Test
 	public void test_calculateVariationMatrix_success() {
-		List<Record> variationMatrix = this.weatherVariationHelper.calculateVariationMatrix(this.records);
+		List<Record> variationMatrix = this.weatherSimulationHelper.calculateVariationMatrix(this.records);
 		Assert.assertNotNull(variationMatrix);
 		Assert.assertEquals(6, variationMatrix.size());
 	}

@@ -16,7 +16,7 @@ package au.com.cba.weatherforcasting.algorithm;
 
 /**
  * <p>
- * A generic marker representation of a single record that can be used for creating a window
+ * A generic representation of a single record that can be used for creating a window
  * </p>
  * 
  * @author Anjaly Chakkalakkal
@@ -24,5 +24,5 @@ package au.com.cba.weatherforcasting.algorithm;
  */
 public interface Record {
 
-	// Marker interface for a record
+	public String getFormattedData();
 }

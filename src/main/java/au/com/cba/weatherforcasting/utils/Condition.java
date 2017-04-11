@@ -25,5 +25,5 @@ package au.com.cba.weatherforcasting.utils;
 
 public enum Condition {
 
-	RAINY, STORMY, SUNNY, CLOUD, HOT, DRY, WET;
+	RAINY, STORMY, SUNNY, CLOUD, HOT, WARM, WET, COLD;
 }

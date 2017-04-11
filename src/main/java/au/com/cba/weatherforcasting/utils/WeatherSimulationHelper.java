@@ -14,7 +14,10 @@
  ********************************************************************************/
 package au.com.cba.weatherforcasting.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
@@ -33,14 +36,14 @@ import au.com.cba.weatherforcasting.algorithm.Window;
  * @author Anjaly Chakkalakkal
  *
  */
-public class WeatherVariationHelper {
+public class WeatherSimulationHelper {
 
-	private Logger logger = LogManager.getLogger(WeatherVariationHelperTest.class);
+	private Logger logger = LogManager.getLogger(WeatherSimulationHelper.class);
 
-	private static WeatherVariationHelper instance;
+	private static WeatherSimulationHelper instance;
 	private static Object mutex = new Object();
 
-	private WeatherVariationHelper() {
+	private WeatherSimulationHelper() {
 
 	}
 
@@ -54,12 +57,11 @@ public class WeatherVariationHelper {
 	 * @param records
 	 *            list of record from current year.
 	 * @return distance between two list of records.
-	 * @throws WeatherVariationHelperException
+	 * @throws WeatherSimulationHelperException
 	 */
 	public Distance calculateEuclideanDistance(final Window<Record> window, final List<Record> records)
-			throws WeatherVariationHelperException {
+			throws WeatherSimulationHelperException {
 
-		logger.info("Calculating Euclidean Distance for PD and CD");
 		checkSizeAreEqual(window.getRecords().size(), records.size());
 		Distance distance = new Distance();
 		distance.setRecords(records);
@@ -69,11 +71,11 @@ public class WeatherVariationHelper {
 		for (int index = 0; index < records.size(); index++) {
 			WeatherRecord previousRecord = (WeatherRecord) window.getRecords().get(index);
 			WeatherRecord currentRecord = (WeatherRecord) records.get(index);
-			sum += Math.pow((previousRecord.getHumidity() - currentRecord.getHumidity()), 2d) +
-					Math.pow((previousRecord.getTemperature() - currentRecord.getTemperature()), 2d) +
-					Math.pow((previousRecord.getPressure() - currentRecord.getPressure()), 2d);
+			sum += Math.pow((previousRecord.getHumidity() - currentRecord.getHumidity()), 2) +
+					Math.pow((previousRecord.getTemperature() - currentRecord.getTemperature()), 2) +
+					Math.pow((previousRecord.getPressure() - currentRecord.getPressure()), 2);
 		}
-		distance.setDistance(Math.round(Math.sqrt(sum) * 1000.0) / 1000.0);
+		distance.setDistance(Math.round(Math.sqrt(sum) * 10000.0) / 10000.0);
 		return distance;
 	}
 
@@ -87,7 +89,6 @@ public class WeatherVariationHelper {
 	 */
 	public Distance getMinimumDistance(final List<Distance> calculatedDistance) {
 
-		logger.info("Calculating minimum distance for a list of distance");
 		Distance minDistance = calculatedDistance.get(0);
 		for (Distance distance : calculatedDistance) {
 			if (distance.getDistance() < minDistance.getDistance()) {
@@ -107,8 +108,7 @@ public class WeatherVariationHelper {
 	 * @return a record contain mean of three parameters.
 	 */
 	public Record calculateMean(final List<Record> records) {
-		
-		logger.info("Calculating mean of a list of record considering temprature, pressure and humidity");
+
 		WeatherRecord finalMeanRecord = new WeatherRecord();
 		for (Record record : records) {
 			float tempreature = finalMeanRecord.getTemperature() + ((WeatherRecord) record).getTemperature();
@@ -118,9 +118,9 @@ public class WeatherVariationHelper {
 			float humidity = finalMeanRecord.getHumidity() + ((WeatherRecord) record).getHumidity();
 			finalMeanRecord.setHumidity(humidity);
 		}
-		finalMeanRecord.setTemperature(Math.round(finalMeanRecord.getTemperature() / records.size() * 1000.0) / 1000.0f);
-		finalMeanRecord.setHumidity(Math.round(finalMeanRecord.getHumidity() / records.size() * 1000.0) / 1000.0f);
-		finalMeanRecord.setPressure(Math.round(finalMeanRecord.getPressure() / records.size() * 1000.0) / 1000.0f);
+		finalMeanRecord.setTemperature(finalMeanRecord.getTemperature() / records.size());
+		finalMeanRecord.setHumidity(finalMeanRecord.getHumidity() / records.size());
+		finalMeanRecord.setPressure(finalMeanRecord.getPressure() / records.size());
 		return finalMeanRecord;
 	}
 
@@ -134,8 +134,7 @@ public class WeatherVariationHelper {
 	 * @return a list of record variations.
 	 */
 	public List<Record> calculateVariationMatrix(final List<Record> records) {
-		
-		logger.info("Calculating varation metrix for a list of weather record");
+
 		WeatherRecord firstRecord = (WeatherRecord) records.get(0);
 		List<Record> weatherRecords = new ArrayList<Record>();
 		for (int index = 1; index < records.size(); index++) {
@@ -162,10 +161,48 @@ public class WeatherVariationHelper {
 	 * @throws WeatherDataBuilderException
 	 */
 	public void checkSizeAreEqual(final int previousDataSize, final int currentDataSize)
-			throws WeatherVariationHelperException {
+			throws WeatherSimulationHelperException {
 		if (previousDataSize != currentDataSize)
-			throw new WeatherVariationHelperException(
+			throw new WeatherSimulationHelperException(
 					"Cannot calculate distance if size of previous data and current data is not same.");
+	}
+
+	/**
+	 * <p>
+	 * A function that format string based on the format passed to it.
+	 * </p>
+	 * 
+	 * @param format
+	 *            parameter that represent format of the date.
+	 * @param date
+	 *            parameter that represent date to be formatted.
+	 * @return a date object after formatting.
+	 * @throws ParseException
+	 *             throws when date cannot be parsed to give format.
+	 */
+	public Date getFormatterDate(String format, String date) throws ParseException {
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+		return dateFormat.parse(date);
+	}
+
+	/**
+	 * <p>
+	 * A function to convert date to string
+	 * </p>
+	 * 
+	 * @param format
+	 *            parameter that represent a format to which date to be converted.
+	 * @param date
+	 *            parameter that represent a date that to be formatted.
+	 * @return a string representation of date.
+	 * @throws ParseException
+	 *             throws when date cannot be parsed to give format.
+	 */
+	public String convertDateToString(String format, Date date) throws ParseException {
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+		return dateFormat.format(date);
 	}
 
 	/**
@@ -173,11 +210,11 @@ public class WeatherVariationHelper {
 	 * 
 	 * @return an instance of Util object.
 	 */
-	public static WeatherVariationHelper getInstance() {
+	public static WeatherSimulationHelper getInstance() {
 
 		if (instance == null) {
 			synchronized (mutex) {
-				instance = new WeatherVariationHelper();
+				instance = new WeatherSimulationHelper();
 			}
 		}
 		return instance;
