@@ -42,11 +42,11 @@ Step 7. End
 ```
 <a name="Configuring-Java-and-Maven"></a>
 
-## Configuring Java and Maven.
+# Configuring Java and Maven.
 
-<h1> Installation procedure </h1>
+## Installation procedure 
 
-<h2>Install Java</h2>
+<h1>Install Java</h1>
 
 ```java
 To run the application java 1.8 need to be installed in the machine.
@@ -59,7 +59,7 @@ export JAVA_HOME=/home/559162/jdk1.8.0_92
 
 export PATH=$PATH:$JAVA_HOME/bin
 
-check the java installation using <b>java -version</b>
+check the java installation using command-line "java -version"
 
 java version "1.8.0_92"
 Java(TM) SE Runtime Environment (build 1.8.0_92-b14)
@@ -69,7 +69,7 @@ Now you have java installed in the machine.
 
 ```
 
-<h2>Install Maven</h2>
+<h1>Install Maven</h1>
 
 ```mvn
 Download Apache Maven and install it.
