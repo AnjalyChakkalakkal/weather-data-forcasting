@@ -89,7 +89,7 @@ Add the bin directory of the created directory apache-maven-3.3.9 to the PATH en
 ## Running the application
 
 ```running
-Once Java and Maven is configured once can trigger the application by the main class "WeatherSimulator".
+Once Java and Maven is configured once can trigger the application by using main class "WeatherSimulator".
 The application will log the resultant data in the console.
 ```
 
