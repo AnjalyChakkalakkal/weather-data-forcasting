@@ -71,14 +71,15 @@ Now you have java installed in the machine.
 
 <h3>Install Maven</h3>
 
+
+Install [Maven](http://maven.apache.org/) (preferably version 3.x) by following
+the [Maven installation instructions](http://maven.apache.org/download.cgi).
+
 ```mvn
 Download Apache Maven and install it.
 
 unzip apache-maven-3.3.9-bin.zip
 
 Add the bin directory of the created directory apache-maven-3.3.9 to the PATH environment variable
-
-Install [Maven](http://maven.apache.org/) (preferably version 3.x) by following
-the [Maven installation instructions](http://maven.apache.org/download.cgi).
 
 ```
