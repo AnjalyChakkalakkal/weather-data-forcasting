@@ -24,10 +24,10 @@ import java.util.Date;
  * @author Anjaly Chakkalakkal
  *
  */
-public class WeatherRecord {
+public class WeatherRecord implements Record {
 
 	private String station;
-	private Date localStation;
+	private Date localTime;
 	private Condition condition;
 	private float temperature;
 	private float pressure;
@@ -41,12 +41,12 @@ public class WeatherRecord {
 		this.station = station;
 	}
 
-	public Date getLocalStation() {
-		return localStation;
+	public Date getLocalTime() {
+		return localTime;
 	}
 
-	public void setLocalStation(Date localStation) {
-		this.localStation = localStation;
+	public void setLocalTime(Date localTime) {
+		this.localTime = localTime;
 	}
 
 	public Condition getCondition() {
