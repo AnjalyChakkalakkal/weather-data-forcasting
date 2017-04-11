@@ -122,7 +122,7 @@ public class WeatherSimulator implements Runnable {
 			}
 
 			logger.info("Loaded weather history for " + Thread.currentThread().getName());
-			Date date = WeatherSimulationHelper.getInstance().getFormatterDate(WeatherConstants.DATE_FORMAT, startDate);
+			Date date = WeatherSimulationHelper.getInstance().getDateFrom(WeatherConstants.DATE_FORMAT, startDate);
 			WeatherForcastingEngine forcastingEngine = new WeatherForcastingEngine(weatherHistory);
 			logger.info("Starting Weather Forcasting for " + Thread.currentThread().getName());
 			forcastingEngine.startForcasting(date, numberOfYearsToPredict);

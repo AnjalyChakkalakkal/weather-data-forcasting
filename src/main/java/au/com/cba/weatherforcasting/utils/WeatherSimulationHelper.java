@@ -180,7 +180,7 @@ public class WeatherSimulationHelper {
 	 * @throws ParseException
 	 *             throws when date cannot be parsed to give format.
 	 */
-	public Date getFormatterDate(final String format, final String date) throws ParseException {
+	public Date getDateFrom(final String format, final String date) throws ParseException {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		return dateFormat.parse(date);

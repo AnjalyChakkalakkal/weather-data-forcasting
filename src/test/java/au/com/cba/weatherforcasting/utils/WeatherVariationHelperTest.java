@@ -14,7 +14,9 @@
  ********************************************************************************/
 package au.com.cba.weatherforcasting.utils;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Assert;
@@ -58,7 +60,7 @@ public class WeatherVariationHelperTest {
 		Distance distance = this.weatherSimulationHelper.calculateEuclideanDistance(this.windowRecord, this.records);
 		Assert.assertNotNull(distance);
 		double actualDistance = distance.getDistance();
-		Assert.assertEquals(52.297, actualDistance, 0.0);
+		Assert.assertEquals(52.2972, actualDistance, 0.0);
 	}
 
 	@Test(expected = WeatherSimulationHelperException.class)
@@ -95,6 +97,21 @@ public class WeatherVariationHelperTest {
 		List<Record> variationMatrix = this.weatherSimulationHelper.calculateVariationMatrix(this.records);
 		Assert.assertNotNull(variationMatrix);
 		Assert.assertEquals(6, variationMatrix.size());
+	}
+
+	@Test
+	public void test_convertDateToString_success() throws ParseException {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2017, 4, 12);
+		String convertDateToString = this.weatherSimulationHelper.convertDateToString(WeatherConstants.DATE_FORMAT,
+				calendar.getTime());
+		Assert.assertNotNull(convertDateToString);
+		Assert.assertEquals("12/05/2017", convertDateToString);
+	}
+
+	@Test
+	public void test_getFormatterDate_success() {
+
 	}
 
 	private List<Distance> populateDistance() {
