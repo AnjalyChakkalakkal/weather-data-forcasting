@@ -42,11 +42,11 @@ Step 7. End
 ```
 <a name="Configuring-Java-and-Maven"></a>
 
-# Configuring Java and Maven.
+## Configuring Java and Maven.
 
-## Installation procedure 
+### Installation procedure 
 
-<h1>Install Java</h1>
+<h3>Install Java</h3>
 
 ```java
 To run the application java 1.8 need to be installed in the machine.
@@ -69,7 +69,7 @@ Now you have java installed in the machine.
 
 ```
 
-<h1>Install Maven</h1>
+<h3>Install Maven</h3>
 
 ```mvn
 Download Apache Maven and install it.
