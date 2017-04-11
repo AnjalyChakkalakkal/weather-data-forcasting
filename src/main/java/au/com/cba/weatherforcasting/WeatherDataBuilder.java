@@ -24,6 +24,7 @@ import au.com.cba.weatherforcasting.algorithm.SlidingWindowException;
 import au.com.cba.weatherforcasting.algorithm.Window;
 import au.com.cba.weatherforcasting.utils.Distance;
 import au.com.cba.weatherforcasting.utils.WeatherVariationHelper;
+import au.com.cba.weatherforcasting.utils.WeatherVariationHelperException;
 
 /**
  * <p>
@@ -63,7 +64,7 @@ public class WeatherDataBuilder {
 	 * 
 	 * @return a record that contain final weather variation.
 	 * @throws WeatherDataBuilderException
-	 *             throws an excpetion if any of the validation fails.
+	 *             throws an exception if any of the validation fails.
 	 */
 	public Record findWeatherVariation() throws WeatherDataBuilderException {
 
@@ -78,7 +79,7 @@ public class WeatherDataBuilder {
 			Record weatherVariation = getFinalWeatherVariation(previousDataVariation, currentDataVariation);
 			return weatherVariation;
 
-		} catch (SlidingWindowException exception) {
+		} catch (SlidingWindowException | WeatherVariationHelperException exception) {
 			throw new WeatherDataBuilderException(exception);
 		}
 	}
@@ -113,13 +114,14 @@ public class WeatherDataBuilder {
 	 * @return a list of distance
 	 * @throws WeatherDataBuilderException
 	 */
-	private List<Distance> calculateDistance(final List<Record> records) throws SlidingWindowException {
+	private List<Distance> calculateDistance(final List<Record> records) throws WeatherVariationHelperException,
+			WeatherDataBuilderException {
 
 		validateRequiredData();
 
 		List<Distance> distances = new ArrayList<Distance>();
 		for (Window<Record> window : this.windows) {
-			checkSizeAreEqual(window.getRecords().size(), records.size());
+			WeatherVariationHelper.getInstance().checkSizeAreEqual(window.getRecords().size(), records.size());
 			distances.add(WeatherVariationHelper.getInstance().calculateEuclideanDistance(window, records));
 		}
 		return distances;
@@ -133,27 +135,10 @@ public class WeatherDataBuilder {
 	 * @throws WeatherDataBuilderException
 	 *             throws when the windows is not created.
 	 */
-	private void validateRequiredData() throws SlidingWindowException {
+	private void validateRequiredData() throws WeatherDataBuilderException {
 
 		if (this.windows == null || this.windows.isEmpty())
-			throw new SlidingWindowException(
+			throw new WeatherDataBuilderException(
 					"Windows not created to calculate distance between current data and previous data");
-	}
-
-	/**
-	 * <p>
-	 * Validate whether previous data and current data is of same size.
-	 * </p>
-	 * 
-	 * @param previousDataSize
-	 *            size of history data
-	 * @param currentDataSize
-	 *            size of current data
-	 * @throws WeatherDataBuilderException
-	 */
-	private void checkSizeAreEqual(final int previousDataSize, final int currentDataSize) throws SlidingWindowException {
-		if (previousDataSize != currentDataSize)
-			throw new SlidingWindowException(
-					"Cannot calculate distance if size of previous data and current data is not same.");
 	}
 }

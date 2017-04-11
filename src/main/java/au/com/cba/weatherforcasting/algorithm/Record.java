@@ -24,4 +24,5 @@ package au.com.cba.weatherforcasting.algorithm;
  */
 public interface Record {
 
+	// Marker interface for a record
 }
