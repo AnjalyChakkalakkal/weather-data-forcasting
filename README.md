@@ -135,6 +135,36 @@ SYDNEY|26/04/2017|17.56919|62.88987|1017.97595|CLOUD
 ### WeatherSimulator
 
 ```
-This is the entry point class of the application, this class act as thread also to handle multiple weather environment.
-This class read the configuration file and loads the history data that is used for prediction.
+This is the entry point class of the application, this class act as thread also to handle multiple
+weather environment.
+This class read the configuration file and loads the history data that is used for weather forecasting.
+```
+
+### WeatherForcastingEngine
+
+```
+This class loads the history data and create a record list that can be used for creating sliding window for
+calculation variation on weather.
+```
+
+### WeatherDataBuilder
+
+```
+WeatherDataBuilder is the class that find weather variation, calculate the distance between previous data
+and current data. calculate mean and the over all data help ins calculating weather variation.
+```
+
+### SlidingWindow
+
+```
+SlidingWindow class take previous year data nearly fourteen day data and create slides so that each slide can 
+compare with the current data to get the weather variation.
+```
+
+### WeatherSimulationHelper
+
+```
+This class provides methods that acts as major functionality in developing the application. it provide function
+to calculate Euclidean Distance, Minimum Distance, Mean and Variation matrix. This class also provide some
+generic validator and util function to parse date to string and vice versa
 ```
