@@ -180,7 +180,7 @@ public class WeatherSimulationHelper {
 	 * @throws ParseException
 	 *             throws when date cannot be parsed to give format.
 	 */
-	public Date getFormatterDate(String format, String date) throws ParseException {
+	public Date getFormatterDate(final String format, final String date) throws ParseException {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		return dateFormat.parse(date);
@@ -199,7 +199,7 @@ public class WeatherSimulationHelper {
 	 * @throws ParseException
 	 *             throws when date cannot be parsed to give format.
 	 */
-	public String convertDateToString(String format, Date date) throws ParseException {
+	public String convertDateToString(final String format, final Date date) throws ParseException {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		return dateFormat.format(date);
@@ -208,7 +208,7 @@ public class WeatherSimulationHelper {
 	/**
 	 * A static function that is thread safe to ensure only one instance of object is used through out the application.
 	 * 
-	 * @return an instance of Util object.
+	 * @return an instance of WeatherSimulationHelper class.
 	 */
 	public static WeatherSimulationHelper getInstance() {
 

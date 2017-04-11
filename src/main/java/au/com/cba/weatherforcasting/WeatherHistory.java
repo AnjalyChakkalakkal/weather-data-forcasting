@@ -21,7 +21,7 @@ import au.com.cba.weatherforcasting.algorithm.Record;
 
 /**
  * <p>
- * A class to hold the history of weather data.
+ * A class to hold the history of weather data. key will be date of the record so that the record can be easily fetched
  * </p>
  * 
  * @author Anjaly Chakkalakkal

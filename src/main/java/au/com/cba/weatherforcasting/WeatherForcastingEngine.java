@@ -114,7 +114,7 @@ public class WeatherForcastingEngine {
 	 *            number of years to consider.
 	 * @return number of days.
 	 */
-	private int getNumberOfDaysAfter(Date forcastingDate, int numberOfYearsToPredict) {
+	private int getNumberOfDaysAfter(final Date forcastingDate, final int numberOfYearsToPredict) {
 		int numberOfDays = 0;
 		for (int index = 1; index <= numberOfYearsToPredict; index++) {
 			Calendar calendar = Calendar.getInstance();
@@ -138,7 +138,7 @@ public class WeatherForcastingEngine {
 	 * @throws ParseException
 	 *             when date is parsing this exception is thrown
 	 */
-	private List<Record> getPastDaysWeatherRecord(Date date, int numberOfDays) throws ParseException {
+	private List<Record> getPastDaysWeatherRecord(final Date date, final int numberOfDays) throws ParseException {
 
 		List<Record> records = new ArrayList<Record>();
 		for (int day = -1; day >= numberOfDays; day--) {
@@ -160,7 +160,7 @@ public class WeatherForcastingEngine {
 	 * @throws ParseException
 	 *             when date is parsing this exception is thrown.
 	 */
-	private Record getRecord(Date yesterday) throws ParseException {
+	private Record getRecord(final Date yesterday) throws ParseException {
 		String lastDay = WeatherSimulationHelper.getInstance().convertDateToString(WeatherConstants.DATE_FORMAT,
 				yesterday);
 		return this.weatherHistory.getHistoryRecord().get(lastDay);
@@ -177,7 +177,7 @@ public class WeatherForcastingEngine {
 	 *            number of days to be considered
 	 * @return a date based on the condition.
 	 */
-	private Date getDate(Date date, int day) {
+	private Date getDate(final Date date, final int day) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.add(Calendar.DATE, day);
@@ -193,7 +193,7 @@ public class WeatherForcastingEngine {
 	 *            the data that need to be considered to find the targeted date.
 	 * @return a date
 	 */
-	private Date getLastYearDate(Date forcastingDate) {
+	private Date getLastYearDate(final Date forcastingDate) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(forcastingDate);
 		calendar.add(Calendar.YEAR, -1);

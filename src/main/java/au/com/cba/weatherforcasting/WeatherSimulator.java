@@ -31,7 +31,8 @@ import au.com.cba.weatherforcasting.utils.WeatherSimulationHelper;
 
 /**
  * <p>
- * Main entry point of the application, Extra arguments are received from this class.
+ * Main entry point of the application, Extra arguments are received from this class. This class act a thread for
+ * handling multiple weather station. History file is loaded based on the configuration file and data is predicted.
  * </p>
  * 
  * @author Anjaly Chakkalakkal
@@ -50,7 +51,18 @@ public class WeatherSimulator implements Runnable {
 		this.weatherMetaData = weatherMetaData;
 	}
 
-	public static void main(String[] args) throws Exception {
+	/**
+	 * <p>
+	 * This function marks the entry point of the application. This function loads configuration data and start weather
+	 * forecasting using the history data and sliding window algorithm.
+	 * </p>
+	 * 
+	 * @param args
+	 *            the argument to the application.
+	 * @throws Exception
+	 *             the final exception point that is given back to JVM.
+	 */
+	public static void main(final String[] args) throws Exception {
 		BasicConfigurator.configure();
 
 		WeatherSimulator simulator = new WeatherSimulator();
@@ -74,6 +86,17 @@ public class WeatherSimulator implements Runnable {
 		}
 	}
 
+	/**
+	 * <p>
+	 * Parse the configuration and read history files for weather data prediction. Configuration contain the location of
+	 * the history files and date from which prediction is to be made and number of days consider for prediction. It
+	 * then create record object from the history file and construct weather history object that is futher used for
+	 * prediction.
+	 * </p>
+	 * 
+	 * @throws Exception
+	 *             is thrown when ever a validation fails.
+	 */
 	private void initializeAndloadHistory() throws Exception {
 
 		StringTokenizer metaTokenizer = new StringTokenizer(this.weatherMetaData, WeatherConstants.METADATA_SEPARATOR);
@@ -106,6 +129,15 @@ public class WeatherSimulator implements Runnable {
 		}
 	}
 
+	/**
+	 * <p>
+	 * This function load configuration file from the resource folder.
+	 * </p>
+	 * 
+	 * @return a property that was created from the configuration file.
+	 * @throws Exception
+	 *             is thrown when the file is not available in the location.
+	 */
 	private Properties loadConfigurationFile() throws Exception {
 
 		Properties configuration = new Properties();
