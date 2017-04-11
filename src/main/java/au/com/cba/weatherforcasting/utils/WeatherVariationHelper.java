@@ -17,6 +17,10 @@ package au.com.cba.weatherforcasting.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
+import au.com.cba.weatherforcasting.WeatherDataBuilderException;
 import au.com.cba.weatherforcasting.algorithm.Record;
 import au.com.cba.weatherforcasting.algorithm.WeatherRecord;
 import au.com.cba.weatherforcasting.algorithm.Window;
@@ -30,6 +34,8 @@ import au.com.cba.weatherforcasting.algorithm.Window;
  *
  */
 public class WeatherVariationHelper {
+
+	private Logger logger = LogManager.getLogger(WeatherVariationHelperTest.class);
 
 	private static WeatherVariationHelper instance;
 	private static Object mutex = new Object();
@@ -48,9 +54,13 @@ public class WeatherVariationHelper {
 	 * @param records
 	 *            list of record from current year.
 	 * @return distance between two list of records.
+	 * @throws WeatherVariationHelperException
 	 */
-	public Distance calculateEuclideanDistance(final Window<Record> window, final List<Record> records) {
+	public Distance calculateEuclideanDistance(final Window<Record> window, final List<Record> records)
+			throws WeatherVariationHelperException {
 
+		logger.info("Calculating Euclidean Distance for PD and CD");
+		checkSizeAreEqual(window.getRecords().size(), records.size());
 		Distance distance = new Distance();
 		distance.setRecords(records);
 		distance.setWindow(window);
@@ -76,13 +86,15 @@ public class WeatherVariationHelper {
 	 * @return the minimum calculated distance.
 	 */
 	public Distance getMinimumDistance(final List<Distance> calculatedDistance) {
+
+		logger.info("Calculating minimum distance for a list of distance");
 		Distance minDistance = calculatedDistance.get(0);
 		for (Distance distance : calculatedDistance) {
 			if (distance.getDistance() < minDistance.getDistance()) {
 				minDistance = distance;
 			}
 		}
-		return null;
+		return minDistance;
 	}
 
 	/**
@@ -95,18 +107,20 @@ public class WeatherVariationHelper {
 	 * @return a record contain mean of three parameters.
 	 */
 	public Record calculateMean(final List<Record> records) {
+		
+		logger.info("Calculating mean of a list of record considering temprature, pressure and humidity");
 		WeatherRecord finalMeanRecord = new WeatherRecord();
 		for (Record record : records) {
 			float tempreature = finalMeanRecord.getTemperature() + ((WeatherRecord) record).getTemperature();
 			finalMeanRecord.setTemperature(tempreature);
 			float pressure = finalMeanRecord.getPressure() + ((WeatherRecord) record).getPressure();
-			finalMeanRecord.setTemperature(pressure);
+			finalMeanRecord.setPressure(pressure);
 			float humidity = finalMeanRecord.getHumidity() + ((WeatherRecord) record).getHumidity();
-			finalMeanRecord.setTemperature(humidity);
+			finalMeanRecord.setHumidity(humidity);
 		}
-		finalMeanRecord.setTemperature(finalMeanRecord.getTemperature() / records.size());
-		finalMeanRecord.setHumidity(finalMeanRecord.getHumidity() / records.size());
-		finalMeanRecord.setPressure(finalMeanRecord.getPressure() / records.size());
+		finalMeanRecord.setTemperature(Math.round(finalMeanRecord.getTemperature() / records.size() * 1000.0) / 1000.0f);
+		finalMeanRecord.setHumidity(Math.round(finalMeanRecord.getHumidity() / records.size() * 1000.0) / 1000.0f);
+		finalMeanRecord.setPressure(Math.round(finalMeanRecord.getPressure() / records.size() * 1000.0) / 1000.0f);
 		return finalMeanRecord;
 	}
 
@@ -120,6 +134,8 @@ public class WeatherVariationHelper {
 	 * @return a list of record variations.
 	 */
 	public List<Record> calculateVariationMatrix(final List<Record> records) {
+		
+		logger.info("Calculating varation metrix for a list of weather record");
 		WeatherRecord firstRecord = (WeatherRecord) records.get(0);
 		List<Record> weatherRecords = new ArrayList<Record>();
 		for (int index = 1; index < records.size(); index++) {
@@ -132,6 +148,24 @@ public class WeatherVariationHelper {
 			firstRecord = secondRecord;
 		}
 		return weatherRecords;
+	}
+
+	/**
+	 * <p>
+	 * Validate whether previous data and current data is of same size.
+	 * </p>
+	 * 
+	 * @param previousDataSize
+	 *            size of history data
+	 * @param currentDataSize
+	 *            size of current data
+	 * @throws WeatherDataBuilderException
+	 */
+	public void checkSizeAreEqual(final int previousDataSize, final int currentDataSize)
+			throws WeatherVariationHelperException {
+		if (previousDataSize != currentDataSize)
+			throw new WeatherVariationHelperException(
+					"Cannot calculate distance if size of previous data and current data is not same.");
 	}
 
 	/**
