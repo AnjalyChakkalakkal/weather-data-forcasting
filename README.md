@@ -1,6 +1,6 @@
 # Weather Forcasting
 
-Create a toy model of the environment (taking into account things like atmosphere, topography,
+   Create a toy model of the environment (taking into account things like atmosphere, topography,
 geography, oceanography, or similar) that evolves over time. Then take measurements at various
 locations (ie weather stations), and then have your program emit that data.
 
@@ -19,7 +19,7 @@ Table of Contents
 
 ## Weather forecasting and Algorithm used
 
-Weather forecasting is mainly concerned with the prediction of weather condition in the given future time. Weather forecasts provide critical information about future weather. There are various approaches available in weather forecasting, from relatively simple observation of the sky to highly complex computerized mathematical models.
+ Weather forecasting is mainly concerned with the prediction of weather condition in the given future time. Weather forecasts provide critical information about future weather. There are various approaches available in weather forecasting, from relatively simple observation of the sky to highly complex computerized mathematical models.
 
 ```algo
 
@@ -77,5 +77,8 @@ Download Apache Maven and install it.
 unzip apache-maven-3.3.9-bin.zip
 
 Add the bin directory of the created directory apache-maven-3.3.9 to the PATH environment variable
+
+Install [Maven](http://maven.apache.org/) (preferably version 3.x) by following
+the [Maven installation instructions](http://maven.apache.org/download.cgi).
 
 ```
