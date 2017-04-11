@@ -131,3 +131,10 @@ SYDNEY|26/04/2017|17.56919|62.88987|1017.97595|CLOUD
 <a name="Major-class-used-in-the-application"></a>
 
 ## Major class used in the application
+
+### WeatherSimulator
+
+```
+This is the entry point class of the application, this class act as thread also to handle multiple weather environment.
+This class read the configuration file and loads the history data that is used for prediction.
+```
