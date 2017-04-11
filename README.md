@@ -11,6 +11,7 @@ Table of Contents
 * <a href="#Weather-forecasting-and-Algorithm-used">Weather forecasting and Algorithm used.</a>
 * <a href="#Configuring-Java-and-Maven">Configuring Java and Maven.</a>
 * <a href="#Running-the-application">Running the application.</a>
+* <a href="#Sample-Ouput">Sample Ouput.</a>
 * <a href="#Main-class-used-in-the-application">Main class used in the application.</a>
 
 ---
@@ -81,5 +82,21 @@ Download Apache Maven and install it.
 unzip apache-maven-3.3.9-bin.zip
 
 Add the bin directory of the created directory apache-maven-3.3.9 to the PATH environment variable
+
+```
+<a name="Running-the-application"></a>
+
+## Running the application.
+
+```running
+	Once Java and Maven is configured once can trigger the application by the main class "WeatherSimulator".
+	The application will log the resultant data in the console.
+```
+
+<a name="Sample-Ouput"></a>
+
+## Sample Ouput.
+
+```output
 
 ```
