@@ -59,15 +59,9 @@ Step 7. End
 ```java
 To run the application java 1.8 need to be installed in the machine.
 
-Add JAVA_HOME environment variable and include in PATH variable
+Configure JAVA_HOME environment variable
 
-edit .bashrc to export JAVA_HOME.
-
-export JAVA_HOME=/home/559162/jdk1.8.0_92
-
-export PATH=$PATH:$JAVA_HOME/bin
-
-check the java installation using command-line "java -version"
+Check the java installation using command-line "java -version"
 
 java version "1.8.0_92"
 Java(TM) SE Runtime Environment (build 1.8.0_92-b14)
