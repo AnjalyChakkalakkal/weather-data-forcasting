@@ -8,11 +8,11 @@ locations (ie weather stations), and then have your program emit that data.
 
 Table of Contents
 
-* <a href="#Weather-forecasting-and-Algorithm-used">Weather forecasting and Algorithm used.</a>
-* <a href="#Configuring-Java-and-Maven">Configuring Java and Maven.</a>
-* <a href="#Running-the-application">Running the application.</a>
-* <a href="#Sample-Ouput">Sample Ouput.</a>
-* <a href="#Main-class-used-in-the-application">Main class used in the application.</a>
+* <a href="#Weather-forecasting-and-Algorithm-used">Weather forecasting and Algorithm used</a>
+* <a href="#Configuring-Java-and-Maven">Configuring Java and Maven</a>
+* <a href="#Running-the-application">Running the application</a>
+* <a href="#Sample-Ouput">Sample Ouput</a>
+* <a href="#Major-class-used-in-the-application">Major  class used in the application</a>
 
 ---
 
@@ -43,7 +43,7 @@ Step 7. End
 ```
 <a name="Configuring-Java-and-Maven"></a>
 
-## Configuring Java and Maven.
+## Configuring Java and Maven
 
 ### Installation procedure 
 
@@ -86,7 +86,7 @@ Add the bin directory of the created directory apache-maven-3.3.9 to the PATH en
 ```
 <a name="Running-the-application"></a>
 
-## Running the application.
+## Running the application
 
 ```running
 Once Java and Maven is configured once can trigger the application by the main class "WeatherSimulator".
@@ -95,7 +95,7 @@ The application will log the resultant data in the console.
 
 <a name="Sample-Ouput"></a>
 
-## Sample Ouput.
+## Sample Ouput
 
 ```output
 
@@ -127,3 +127,7 @@ SYDNEY|25/04/2017|17.520838|61.249775|1016.9012|CLOUD
 SYDNEY|26/04/2017|17.56919|62.88987|1017.97595|CLOUD
 
 ```
+
+<a name="Major-class-used-in-the-application"></a>
+
+## Major class used in the application
