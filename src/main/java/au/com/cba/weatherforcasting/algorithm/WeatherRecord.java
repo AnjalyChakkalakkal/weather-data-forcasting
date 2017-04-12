@@ -69,7 +69,7 @@ public class WeatherRecord implements Record {
 		} else if (temperature > 10 && temperature < 15) {
 			this.condition = Condition.COLD;
 		} else if (temperature > 15 && temperature < 20) {
-			this.condition = Condition.CLOUD;
+			this.condition = Condition.CLOUDY;
 		} else if (temperature > 20 && temperature < 25) {
 			this.condition = Condition.RAINY;
 		} else if (temperature > 25 && temperature < 30) {
